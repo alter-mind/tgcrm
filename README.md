@@ -1,5 +1,6 @@
 ---
-aliases: 
+aliases:
+  - Main doc
 tags: 
 cssclasses:
 ---
@@ -45,6 +46,10 @@ Python
 	[aiogram](https://aiogram.dev/)
 	[PyMySQL](https://pymysql.readthedocs.io/)
 MySQL
+Docker
+## Архитектура
+
+Многоконтейнерное приложение. В изолированных контейнерах расположены само приложение и база данных. 
 ## Пространство для общения
 
 [Телеграмм-чат](https://t.me/+tk47YpZDjU1lZTYy)
