@@ -104,4 +104,4 @@ __pycache__/
 ### MySQL db files ###
 # Docker volumes for MySQL
 
-.db-data/
+db-data/
