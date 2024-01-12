@@ -54,9 +54,58 @@ CREATE TABLE res_roles (
 );
 
 
+CREATE TABLE calendars (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+	description TEXT,
+	user_id BIGINT UNSIGNED NOT NULL,
+	
+	FOREIGN KEY (user_id) REFERENCES users(id)	
+);
 
 
+CREATE TABLE events (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+	description TEXT,
+	start_time DATETIME,
+	end_time DATETIME,
+	calendar_id BIGINT UNSIGNED NOT NULL,
+	
+	FOREIGN KEY (calendar_id) REFERENCES calendars(id)	
+);
 
+
+CREATE TABLE participants (
+	id SERIAL PRIMARY KEY,
+	event_id BIGINT UNSIGNED NOT NULL,
+	user_id BIGINT UNSIGNED NOT NULL, 
+	
+	FOREIGN KEY (event_id) REFERENCES events(id),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE reminders (
+	id SERIAL PRIMARY KEY,
+	content TEXT,
+	moment DATETIME,
+	event_id BIGINT UNSIGNED NOT NULL,
+	
+	FOREIGN KEY (event_id) REFERENCES events(id)
+);
+
+
+CREATE TABLE recurring_events (
+	id SERIAL PRIMARY KEY,
+	event_id BIGINT UNSIGNED NOT NULL,
+	rtype JSON,
+	rparam JSON,
+	start_date DATETIME,
+	end_date DATETIME,
+	
+	FOREIGN KEY (event_id) REFERENCES events(id)
+);
 
 
 
