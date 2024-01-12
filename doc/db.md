@@ -49,7 +49,7 @@ services:
       context: ./db
       dockerfile: Dockerfile
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./db-data:/var/lib/mysql
     ports:
       - "3306:3306"
   app:
@@ -60,8 +60,6 @@ services:
       - "5000:5000"
     depends_on:
       - db
-volumes:
-  mysql-data:./db-data
 ```
-Где опция `volumes` внутри определения сервиса `db` подключает том `mysql-data` к директории `/var/lib/mysql` внутри контейнера, где база MySQL хранит свои данные. А блок `volumes` в самом конце служит для определения томa volumes и после двоеточия нужно указывать путь к локальной директории, которая и будет определена как том docker c соответствующим именем, в данном случае `mysql-data`
+Где опция `volumes` внутри определения сервиса `db` подключает директорию `./db-data` к директории `/var/lib/mysql` внутри контейнера, где база MySQL хранит свои данные. 
 
