@@ -108,7 +108,77 @@ CREATE TABLE recurring_events (
 );
 
 
+CREATE TABLE services (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+	price INT,
+	is_public BOOLEAN DEFAULT FALSE
+);
 
+
+CREATE TABLE payments (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+	amount INT,
+	sender_id BIGINT UNSIGNED NOT NULL,
+	recipient_id BIGINT UNSIGNED NOT NULL,
+	service_id 	BIGINT UNSIGNED NOT NULL,
+	is_verified BOOLEAN DEFAULT FALSE,
+	
+	FOREIGN KEY (sender_id) REFERENCES users(id),
+	FOREIGN KEY (recipient_id) REFERENCES users(id),
+	FOREIGN KEY (service_id) REFERENCES services(id)
+);
+
+
+CREATE TABLE contacts (
+	id SERIAL PRIMARY KEY,
+	client_id BIGINT UNSIGNED NOT NULL,
+	master_id BIGINT UNSIGNED NOT NULL,
+	service_id BIGINT UNSIGNED NOT NULL,
+	
+	FOREIGN KEY (client_id) REFERENCES users(id),
+	FOREIGN KEY (master_id) REFERENCES users(id),
+	FOREIGN KEY (service_id) REFERENCES services(id)
+);
+
+
+CREATE TABLE contact_degrees (
+	id SERIAL PRIMARY KEY,
+	contact_id BIGINT UNSIGNED NOT NULL,
+	value INT,
+	
+	FOREIGN KEY (contact_id) REFERENCES contacts(id)
+);
+
+
+CREATE TABLE events_metrics (
+	id SERIAL PRIMARY KEY, 
+	event_id BIGINT UNSIGNED NOT NULL,
+	payment_id BIGINT UNSIGNED NOT NULL,
+	client_rate TINYINT DEFAULT 0,
+	client_note TEXT,
+	client_future_note TEXT,
+	master_rate TINYINT DEFAULT 0,
+	master_progress_rate TINYINT DEFAULT 0,
+	master_note TEXT,
+	master_future_note TEXT,
+	
+	FOREIGN KEY (event_id) REFERENCES events(id),
+	FOREIGN KEY (payment_id) REFERENCES payments(id)
+);
+
+
+CREATE TABLE payments_details (
+	id SERIAL PRIMARY KEY,
+	payment_id BIGINT UNSIGNED NOT NULL,
+	note TEXT,
+	receipt BLOB,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	updated_ad DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	
+	FOREIGN KEY (payment_id) REFERENCES payments(id)	
+);
 
 
 
