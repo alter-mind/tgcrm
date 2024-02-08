@@ -101,7 +101,6 @@ __pycache__/
 .trash/
 
 
-### MySQL db files ###
-# Docker volumes for MySQL
-
-db-data/
+### MySQL connections ###
+# login and password for db
+./app/db/connection.py
