@@ -1,13 +1,14 @@
 import pymysql
+from config import db_coonection
 
 
 class Database:
-    def __init__(self):
+    def __init__(self, connection):
         self.db = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='root_password',
-            database='Crm'
+            host=connection.host,
+            user=connection.user,
+            password=connection.password,
+            database=connection.database
         )
 
     def test(self):
@@ -17,4 +18,4 @@ class Database:
         cursor.close()
 
 
-db = Database()
+db = Database(db_coonection)
