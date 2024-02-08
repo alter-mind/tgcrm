@@ -104,3 +104,9 @@ __pycache__/
 ### MySQL connections ###
 # login and password for db
 ./app/db/connection.py
+
+### Private confs ###
+app/.conf/*
+
+### Python Virtual Environment ###
+.venv/*
